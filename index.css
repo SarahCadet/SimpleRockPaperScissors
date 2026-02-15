@@ -1,0 +1,19 @@
+
+header {
+    display: flex;
+    justify-content: center;
+}
+
+#player-choices {
+    margin: auto;
+    max-width: 50%; 
+    display: flex;
+    justify-content: center;
+}
+#player-choices button {
+    margin: 15px;
+    height: 50px;
+    width: 100px;
+    border-radius: 10px;
+    font-size: 20px;
+}

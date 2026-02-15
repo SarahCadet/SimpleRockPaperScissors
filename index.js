@@ -1,39 +1,53 @@
-console.log("Hello World");
 let humanScore = 0;
 let cpuScore = 0;
 let choices = ["Rock", "Paper", "Scissors"]
+
+const choicesDiv = document.querySelector("#player-choices")
+const resultsText = document.querySelector("#results p")
 function getComputerChoice(){
     let index = Math.floor((Math.random() * 3));
     return index;
 }
-
-function getHumanChoice(){
-    let index = prompt("Enter value between 0-2; where 0 - R | 1 -  P | 2 - S");
-    if(index < 0 || index > 2){
-        console.log("incorrect input");
+choicesDiv.addEventListener('click', function(e){
+    const clicked = e.target;
+    if(!(clicked instanceof HTMLButtonElement)){
         return;
     }
-    return index;
-}
+    switch (clicked.textContent) {
+        case "Rock":
+            playRound(0);
+            break;
+    
+        case "Paper":
+            playRound(1);
+            break;
+        case "Scissors":
+            playRound(2);
+            break;
+        default:
+            console.log("something went wrong");
+            break;
+    }
+});
 
-while(prompt("Enter 0 to quit") != 0){
+
+function playRound(humanChoiceIndex){
     let cpuChoiceIndex = getComputerChoice();
     let cpuChoice = choices[cpuChoiceIndex];
-    let humanChoiceIndex = getHumanChoice();
     let humanChoice = choices[humanChoiceIndex];
-    console.log("\nCPU CHOICE: " + cpuChoice + "\nHUMAN CHOICE: " + humanChoice);
+    resultsText.innerHTML = "CPU CHOICE: " + cpuChoice + "<br>HUMAN CHOICE: " + humanChoice + "<br> <br>";
     if(cpuChoice == humanChoice){
-        console.log("Draw!");
-        continue;
+        resultsText.innerHTML += "<br>Draw!";
+        return;
     }
     let cpuKiller = choices[(cpuChoiceIndex + 1) % 3];
     let humanKiller = choices[(humanChoiceIndex + 1) % 3];
     if(humanChoice == cpuKiller){
         humanScore++;
-        console.log("Human wins this round!");
+        resultsText.innerHTML += "<br>Human wins this round!<br>";
     } else if(cpuChoice == humanKiller){
         cpuScore++;
-        console.log("CPU wins this round!");
+        resultsText.innerHTML += "<br>CPU wins this round!<br>";
     }
-    console.log("Current Score\nHuman: " + humanScore + "\nCPU: " + cpuScore);
+    resultsText.innerHTML += "Current Score<br>Human: " + humanScore + "<br>CPU: " + cpuScore;
 }
